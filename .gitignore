@@ -1,0 +1,10 @@
+# apk.d
+*.apk
+
+# vagrant
+.vagrant/
+
+# macosx
+.DS_Store
+
+*.log
