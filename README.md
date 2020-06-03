@@ -1,6 +1,6 @@
 # aind-unity-poc
 
-Steps to run a Unity Android Build in Android in Docker (AinD) on a Mac.
+Steps to run a Unity Android Build in Android (Anbox) in Docker ([AinD](https://github.com/aind-containers/aind)) on a Mac.
 
 ## Prereqs
 
