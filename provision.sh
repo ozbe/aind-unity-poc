@@ -2,7 +2,7 @@
 set -e
 
 #
-# anind dependencies
+# AinD dependencies
 # source https://github.com/anbox/anbox-modules
 sudo apt-get update && sudo apt-get -y upgrade
 sudo apt install -y dkms unzip
