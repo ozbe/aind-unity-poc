@@ -4,17 +4,17 @@ Steps to run a Unity Android Build in Android (Anbox) in Docker ([AinD](https://
 
 ## Prereqs
 
-- [Unity](https://unity3d.com/get-unity/download) with Android Build Support - Tested with version 2017.4.40f1
-- [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Tested with version 6.0.22
-- [Vagrant](https://www.vagrantup.com/downloads.html) - Tested with version 2.2.9
-- [Android Studio ](https://developer.android.com/studio/) - would probably just install the command line tools
+- [Unity](https://unity3d.com/get-unity/download) with Android Build Support - Tested with version 2018.4.30f1
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Tested with version 6.1.16
+- [Vagrant](https://www.vagrantup.com/downloads.html) - Tested with version 2.2.14
+- [Android Studio ](https://developer.android.com/studio/) - Tested with version 
 - [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/)
 
 ## Steps
 1. Build Unity Project
-2. Setup aind
-3. Run aind
-4. Use aind
+2. Setup AinD
+3. Run AinD
+4. Use AinD
 5. Shutdown
 6. Cleanup
 
@@ -88,67 +88,58 @@ $ vagrant destroy -f
 
 ## Troubleshooting
 
-### check logs
+### Check logs
+In VM
 ```
 $ sudo docker logs -f aind
 ```
 
-### anbox-bridge isn't running
+### Start anbox-bridge, if it isn't running
+In VM
 ```
-sudo docker exec aind /usr/local/share/anbox/anbox-bridge.sh start
-```
-
-### check status of container manager
-```
-sudo docker exec aind systemctl status --no-pager -l anbox-container-manager
+$ sudo docker exec aind /usr/local/share/anbox/anbox-bridge.sh start
 ```
 
-### restart anbox container manager
+### Check status of Anbox Container Manager
+In VM
 ```
-systemctl restart anbox-container-manager
+$ sudo docker exec aind systemctl status --no-pager -l anbox-container-manager
 ```
 
-run pre script
+### Restart Anbox Container Manager
+In container
 ```
+$ systemctl restart anbox-container-manager
 $ /usr/local/bin/anbox-container-manager-pre.sh
-+ /sbin/modprobe binder_linux
-modprobe: FATAL: Module binder_linux not found in directory /lib/modules/5.3.0-53-generic
 ```
 
-### open bash in already started aind container bash
+### Open Bash in already started AinD container bash
+In VM
 ```
 $ sudo docker exec -it aind bash
 ```
 
-### install apk
-open xterm
+### Install APK
+In container
 ```
 cd /`apk.d/
 adb install rotatingcube.apk
 ```
 
-### find anbox launch commands
+### Find Anbox launch commands (and APP_ID and ACTIVITY_ID)
+In container
 ```
 sed -n 's!^Exec=/usr/bin/!!p' ~/.local/share/applications/anbox/*.desktop
 ```
 
-### launch apk in anbox
+### Launch APK in Anbox
+In container
 ```
-anbox launch --action=android.intent.action.MAIN --package=APP_ID --component=ACTIVITY_ID
+anbox launch --action=android.intent.action.MAIN --package=[APP_ID] --component=[ACTIVITY_ID]
 ```
-
-## TODO
-- Don't store local password and mount it. It is worthless to others, but it still feels dirty.
 
 ## References
 
-https://docs.unity3d.com/ScriptReference/MonoBehaviour.StartCoroutine.html
-
-https://masoudarvishian.wordpress.com/2017/04/29/creating-a-rotating-cube-with-unity3d/
-
-Building apps for Android
-https://docs.unity3d.com/Manual/android-BuildProcess.html
-
-android sdk https://developer.android.com/studio/ (could probably just install the command line tools)
-
-Android SDK root folder `/Users/username/Library/Android/sdk`
+* [Unity - Scripting API: MonoBehaviour.StartCoroutine](https://docs.unity3d.com/ScriptReference/MonoBehaviour.StartCoroutine.html)
+*  [Creating A Rotating Cube With Unity3D](https://masoudarvishian.wordpress.com/2017/04/29/creating-a-rotating-cube-with-unity3d/) 
+* [Unity - Manual:  Building apps for Android](https://docs.unity3d.com/Manual/android-BuildProcess.html)
