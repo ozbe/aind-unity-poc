@@ -45,22 +45,29 @@ $ vagrant ssh
 
 In vm
 ```
-$ sudo docker run --rm -td --name aind --privileged -p 5900:5900 -v /vagrant/passwdfile:/home/user/.vnc/passwdfile:ro -v /vagrant/apk.d/:/apk.d/ -v /lib/modules:/lib/modules:ro aind/aind
+$ sudo docker run \
+   --rm \
+   -td \
+   --name aind \
+   --privileged \
+   -p 5900:5900 \
+   -v /vagrant/apk.d/:/apk.d/ \
+   -v /lib/modules:/lib/modules:ro \
+	aind/aind:0.0.3
 ```
 
 Wait for `Ready` and check for errors with `$ sudo docker logs -f aind`
 
+When ready, copy the VNC password
+```
+sudo docker exec aind cat /home/user/.vnc/passwdfile
+```
+
 ### Use
-
-#### Terminal
-
-*TODO*
-
-#### VNC
 
 1. Open VNC Viewer
 2. Connect to address: `127.0.0.1:5900`
-3. Password is `4p5gvwu0jei02cilj7yyfnyuvfw312qc`
+3. Enter the VNC password copied from above
 4. Connect
 4. When you connect to the server, Anbox Application Manager window should be open
 5. Double-click on RotatingCube
